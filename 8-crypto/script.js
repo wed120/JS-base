@@ -1,24 +1,56 @@
-'use strict';
+"use strict";
 
-const password = '6ENW5HQ5';
-const password1 = '5QH5WNE6Q';
+const markFunds = 0;
+const operations = [-2, 10, -11, 0];
 
-function crupto(password) {
-	const rePassword = password.split('')
-	const re = rePassword.reverse()
-	re.push(rePassword['1'])
-	
-	
-	console.log(re.join(''))
-}
+// вьебать редьюсом в одну строчку
+const calcTotalBalance = (initialBalance, operations) => {
+  let sum = initialBalance;
 
-function check(password1) {
+  for (const index of operations) {
+    sum += index;
+  }
 
-	const newPas = password1.split('')
-	newPas.pop()
-	newPas.reverse()
-	password === newPas.join('') ? console.log(true) : console.log(false);
-}
+  return sum;
+};
 
-crupto(password)
-check(password1)
+const logIfNegativeBalance = (initialBalance, operations) => {
+  let sum = initialBalance;
+
+  for (let index = 0; index < operations.length; index++) {
+    // const element = (sum += operations[index]);
+
+    sum += operations[index];
+
+    if (sum < 0) {
+      console.log(false);
+    }
+  }
+};
+
+const calcAvgIncomeAndExpense = (operations) => {
+  let avgIncome = [];
+  let avgExpense = [];
+
+  for (let index = 0; index < operations.length; index++) {
+    const element = operations[index];
+    element < 0 ? avgExpense.push(element) : avgIncome.push(element);
+  }
+
+  const avgIncomeReduce = avgIncome.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
+  );
+
+  const avgExpenseReduce = avgExpense.reduce(
+    (accumulator, currentValue) => accumulator + currentValue
+  );
+
+  return [
+    "avgIncome = " + avgIncomeReduce / avgIncome.length,
+    "avgExpense = " + avgExpenseReduce / avgExpense.length,
+  ];
+};
+
+console.log(calcTotalBalance(markFunds, operations));
+console.log(logIfNegativeBalance(markFunds, operations));
+console.log(calcAvgIncomeAndExpense(operations));
